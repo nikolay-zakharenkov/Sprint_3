@@ -7,8 +7,8 @@ import org.junit.After;
 import org.junit.Test;
 import steps.TestsSteps;
 
-public class ListOfOrdersTests {
-    TestSteps step = new TestSteps();
+public class ListWithOrdersTests {
+    TestsSteps step = new TestsSteps();
 
     @After
     public void tearDown() {

@@ -7,7 +7,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class CourierRequestBuilder extends BaseClass {
+public class CourierRequestBuilder extends MainClass {
     private final static String COURIER_PATH = "/api/v1/courier/";
 
     public Response createCourier(File file) {

@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Test;
 import steps.TestsSteps;
 
-public class CreateCourierTests {
+public class CreatingCourierTests {
     File newCourier = new File("src/test/resources/courier/newSprint3CourierWithAllFields.json");
-    File loginNewCourier = new File("src/test/resources/login/loginNewSprint3Courier.json");
-    TestSteps step = new TestsSteps();
+    File loginNewCourier = new File("src/test/resources/login/loginSprint3NewCourier.json");
+    TestsSteps step = new TestsSteps();
 
     @After
     public void tearDown() {

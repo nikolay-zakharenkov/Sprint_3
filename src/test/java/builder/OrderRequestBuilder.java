@@ -7,7 +7,7 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderRequestBuilder extends BaseClass {
+public class OrderRequestBuilder extends MainClass {
     Integer cashId = null;
     private final static String ORDER_PATH = "/api/v1/orders";
 

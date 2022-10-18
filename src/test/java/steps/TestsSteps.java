@@ -15,7 +15,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class TestSteps {
+public class TestsSteps {
     CourierRequestBuilder courierRequestBuilder = new CourierRequestBuilder();
     OrderRequestBuilder orderRequestBuilder = new OrderRequestBuilder();
 

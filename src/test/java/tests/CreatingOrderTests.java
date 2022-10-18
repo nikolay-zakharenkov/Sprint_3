@@ -7,8 +7,8 @@ import org.junit.After;
 import org.junit.Test;
 import steps.TestsSteps;
 
-public class CreateOrderTests {
-    TestSteps step = new TestsSteps();
+public class CreatingOrderTests {
+    TestsSteps step = new TestsSteps();
 
 
     @After

@@ -10,8 +10,8 @@ import steps.TestsSteps;
 
 public class LoginCourierTests {
     File newCourier = new File("src/test/resources/courier/newSprint3CourierWithAllFields.json");
-    File loginNewCourier = new File("src/test/resources/login/loginNewSprint3Courier.json");
-    TestSteps step = new TestSteps();
+    File loginNewCourier = new File("src/test/resources/login/loginSprint3NewCourier.json");
+    TestsSteps step = new TestsSteps();
 
     @After
     public void tearDown() {
