@@ -2,7 +2,6 @@ package builder;
 
 import java.io.File;
 
-import base.MainClass;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
