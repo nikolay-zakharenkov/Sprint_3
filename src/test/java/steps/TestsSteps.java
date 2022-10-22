@@ -1,17 +1,13 @@
 package steps;
 
-import java.io.File;
-
 import builder.CourierRequestBuilder;
 import builder.OrderRequestBuilder;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import models.Courier;
+import models.Order;
 
-import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
-import static org.apache.http.HttpStatus.SC_CONFLICT;
-import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -20,92 +16,89 @@ public class TestsSteps {
     OrderRequestBuilder orderRequestBuilder = new OrderRequestBuilder();
 
     @Step("Creating new courier")
-    public Response createCourierStep(File file) {
-        return courierRequestBuilder.createCourier(file);
+    public Response createCourier(Courier courier) {
+        return courierRequestBuilder.createCourier(courier);
     }
 
     @Step("Removing test data")
-    public void deleteTestDataStep (File file) {
-        courierRequestBuilder.deleteTestData(file);
+    public void clearCourierTestData(Courier courier) {
+        courierRequestBuilder.deleteCourierTestData(courier);
     }
+
 
     @Step("Login by new courier")
-    public Response loginCourierStep (File file) {
-        return courierRequestBuilder.loginCourier(file);
+    public Response courierLogin(Courier courier) {
+        return courierRequestBuilder.loginCourier(courier);
     }
 
-    @Step("Creating new order and saving id to cash")
-    public Response createOrderStep(File file) {
-        return orderRequestBuilder.createOrder(file);
-    }
-
-    @Step("Clearing cash")
-    public void clearCash() {
-        orderRequestBuilder.clearCash();
+    @Step("Creating new order")
+    public Response createOrder(Order order) {
+        return orderRequestBuilder.createOrder(order);
     }
 
     @Step("Canceling order")
-    public void cancelOrderStep() {
-        orderRequestBuilder.cancelOrder();
+    public void cancelOrder(Integer orderId) {
+        orderRequestBuilder.cancelOrder(orderId);
     }
 
     @Step("Getting list of orders")
-    public Response getListOfOrdersStep() {
-        return orderRequestBuilder.getListOfOrders();
+    public Response getOrderList() {
+        return orderRequestBuilder.getOrderList();
     }
 
-    @Step("Comparing message and status code for bad request")
-    public void compareMessageAndStatusCodeForBadRequest(Response response) {
+    @Step("Bad request message and status check")
+    public void badRequestMessageAndStatusCheck(Response response) {
         response.then().assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"))
                 .and()
                 .statusCode(SC_BAD_REQUEST);
     }
 
-    @Step("Comparing body and status code for created request")
-    public void compareBodyAndStatusCodeForCreatedCourierRequest(Response response) {
+    @Step("Courier creation status and body check")
+    public void courierCreationResponseCheck(Response response) {
         response.then().assertThat().body("ok", equalTo(true))
                 .and()
                 .statusCode(SC_CREATED);
     }
 
-    @Step("Comparing message and status code for conflict request")
-    public void compareMessageAndStatusCodeForConflictRequest(Response response) {
+    @Step("Conflict login request response check")
+    public void conflictLoginRequestResponseCheck(Response response) {
         response.then().assertThat().body("message",
                         equalTo("Этот логин уже используется. Попробуйте другой."))
                 .and()
                 .statusCode(SC_CONFLICT);
     }
 
-    @Step("Comparing body and status code for success login request")
-    public void compareBodyAndStatusCodeForSuccessLoginRequest(Response response) {
+    @Step("Success login response check")
+    public void successLoginResponseCheck(Response response) {
         response.then().assertThat().body("id", notNullValue())
                 .and()
                 .statusCode(SC_OK);
     }
 
-    @Step("Comparing body and status code for not found request")
-    public void compareBodyAndStatusCodeForNotFoundRequest(Response response) {
+    @Step("Login not found response check")
+    public void loginNotFoundResponseCheck(Response response) {
         response.then().assertThat().body("message", equalTo("Учетная запись не найдена"))
                 .and()
                 .statusCode(SC_NOT_FOUND);
     }
 
-    @Step("Comparing body and status code for bad request")
-    public void compareBodyAndStatusCodeForBadRequest(Response response) {
+    @Step("Not enough data for login response check")
+    public void notEnoughDataForLoginResponseCheck(Response response) {
         response.then().assertThat().body("message", equalTo("Недостаточно данных для входа"))
                 .and()
                 .statusCode(SC_BAD_REQUEST);
     }
 
-    @Step("Comparing body and status code for created request")
-    public void compareBodyAndStatusCodeForCreatedOrderRequest(Response response) {
+    @Step("Order creation response check")
+    public Integer orderCreationResponseCheck(Response response) {
         response.then().assertThat().body("track", notNullValue())
                 .and()
                 .statusCode(SC_CREATED);
+        return response.then().extract().body().path("track");
     }
 
-    @Step("Comparing body and status code for success get list request")
-    public void compareBodyAndStatusCodeForGetListRequest(Response response) {
+    @Step("Get order list response check")
+    public void getOrderListResponseCheck(Response response) {
         response.then().assertThat().body("orders[0]", notNullValue())
                 .and()
                 .statusCode(SC_OK);
